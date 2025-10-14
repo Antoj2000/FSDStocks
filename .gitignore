@@ -1,0 +1,6 @@
+fsdstocks/output/
+fsdstocks/__pycache__/
+output/
+*.xlsx
+*.png
+*.txt
