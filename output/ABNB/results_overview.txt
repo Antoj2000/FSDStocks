@@ -1,0 +1,8 @@
+ABNB Backtest Results Overview
+------------------------------------------------------------
+Year: 2025 | AvgRet: 1.82% | AvgHold: 42.0d | Trades: 2 | Total: 3.68%
+Year: 2024 | AvgRet: -2.70% | AvgHold: 10.3d | Trades: 9 | Total: -21.81%
+Year: 2023 | AvgRet: -2.99% | AvgHold: 22.6d | Trades: 5 | Total: -14.10%
+Year: 2022 | AvgRet: 0.69% | AvgHold: 15.5d | Trades: 2 | Total: 1.38%
+Year: 2021 | AvgRet: -3.30% | AvgHold: 26.2d | Trades: 4 | Total: -12.58%
+Year: 2020 | AvgRet: 0.00% | AvgHold: 0.0d | Trades: 0 | Total: 0.00%

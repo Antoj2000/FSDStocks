@@ -1,0 +1,3 @@
+Year: 2021 | AvgRet: 0.70% | AvgHold: 12.7d | Trades: 6 | Total: 4.28%
+Year: 2021 | AvgRet: -2.16% | AvgHold: 1.0d | Trades: 3 | Total: -6.34%
+Year: 2021 | AvgRet: -3.30% | AvgHold: 26.2d | Trades: 4 | Total: -12.58%

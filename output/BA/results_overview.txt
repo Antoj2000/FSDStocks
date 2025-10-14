@@ -1,0 +1,12 @@
+BA Backtest Results Overview
+------------------------------------------------------------
+Year: 2025 | AvgRet: 2.68% | AvgHold: 12.8d | Trades: 6 | Total: 17.20%
+Year: 2024 | AvgRet: -1.75% | AvgHold: 5.8d | Trades: 9 | Total: -14.68%
+Year: 2023 | AvgRet: 2.31% | AvgHold: 16.1d | Trades: 9 | Total: 22.83%
+Year: 2022 | AvgRet: 2.44% | AvgHold: 12.5d | Trades: 4 | Total: 10.11%
+Year: 2021 | AvgRet: -2.53% | AvgHold: 14.3d | Trades: 7 | Total: -16.40%
+Year: 2020 | AvgRet: 3.14% | AvgHold: 4.5d | Trades: 6 | Total: 20.42%
+Year: 2019 | AvgRet: -2.29% | AvgHold: 13.3d | Trades: 7 | Total: -14.97%
+Year: 2018 | AvgRet: -1.17% | AvgHold: 12.0d | Trades: 11 | Total: -12.16%
+Year: 2017 | AvgRet: 6.70% | AvgHold: 34.1d | Trades: 7 | Total: 57.46%
+Year: 2016 | AvgRet: 0.21% | AvgHold: 18.7d | Trades: 9 | Total: 1.90%

@@ -1,0 +1,9 @@
+Year: 2016 | AvgRet: -1.01% | AvgHold: 8.3d | Trades: 9 | Total: -8.70%
+Year: 2016 | AvgRet: -1.01% | AvgHold: 8.3d | Trades: 9 | Total: -8.70%
+Year: 2016 | AvgRet: 1.27% | AvgHold: 2.5d | Trades: 2 | Total: 2.56%
+Year: 2016 | AvgRet: 1.25% | AvgHold: 2.0d | Trades: 3 | Total: 3.80%
+Year: 2016 | AvgRet: 0.79% | AvgHold: 1.0d | Trades: 1 | Total: 0.79%
+Year: 2016 | AvgRet: 0.20% | AvgHold: 2.3d | Trades: 9 | Total: 1.82%
+Year: 2016 | AvgRet: -0.03% | AvgHold: 21.1d | Trades: 7 | Total: -0.21%
+Year: 2016 | AvgRet: -0.03% | AvgHold: 14.8d | Trades: 10 | Total: -0.31%
+Year: 2016 | AvgRet: -0.03% | AvgHold: 14.8d | Trades: 10 | Total: -0.31%

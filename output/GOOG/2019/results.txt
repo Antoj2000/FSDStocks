@@ -1,0 +1,9 @@
+Year: 2019 | AvgRet: 0.60% | AvgHold: 18.4d | Trades: 5 | Total: 3.03%
+Year: 2019 | AvgRet: 0.60% | AvgHold: 18.4d | Trades: 5 | Total: 3.03%
+Year: 2019 | AvgRet: 1.78% | AvgHold: 1.0d | Trades: 1 | Total: 1.78%
+Year: 2019 | AvgRet: 0.11% | AvgHold: 1.0d | Trades: 2 | Total: 0.22%
+Year: 2019 | AvgRet: 0.00% | AvgHold: 0.0d | Trades: 0 | Total: 0.00%
+Year: 2019 | AvgRet: 0.49% | AvgHold: 4.1d | Trades: 8 | Total: 3.98%
+Year: 2019 | AvgRet: 5.32% | AvgHold: 53.8d | Trades: 4 | Total: 23.06%
+Year: 2019 | AvgRet: 3.02% | AvgHold: 30.7d | Trades: 7 | Total: 23.15%
+Year: 2019 | AvgRet: 3.02% | AvgHold: 30.7d | Trades: 7 | Total: 23.15%

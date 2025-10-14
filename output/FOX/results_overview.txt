@@ -1,0 +1,9 @@
+FOX Backtest Results Overview
+------------------------------------------------------------
+Year: 2025 | AvgRet: -0.10% | AvgHold: 6.2d | Trades: 4 | Total: -0.41%
+Year: 2024 | AvgRet: 7.31% | AvgHold: 34.3d | Trades: 6 | Total: 52.69%
+Year: 2023 | AvgRet: -1.21% | AvgHold: 9.2d | Trades: 6 | Total: -7.06%
+Year: 2022 | AvgRet: -2.51% | AvgHold: 5.5d | Trades: 6 | Total: -14.12%
+Year: 2021 | AvgRet: -1.16% | AvgHold: 9.8d | Trades: 9 | Total: -10.01%
+Year: 2020 | AvgRet: -1.88% | AvgHold: 6.7d | Trades: 11 | Total: -18.83%
+Year: 2019 | AvgRet: -2.88% | AvgHold: 6.0d | Trades: 3 | Total: -8.38%

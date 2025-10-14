@@ -1,0 +1,12 @@
+GOOG Backtest Results Overview
+------------------------------------------------------------
+Year: 2025 | AvgRet: 5.64% | AvgHold: 32.5d | Trades: 2 | Total: 11.59%
+Year: 2024 | AvgRet: 4.17% | AvgHold: 21.4d | Trades: 9 | Total: 44.45%
+Year: 2023 | AvgRet: 0.41% | AvgHold: 22.9d | Trades: 10 | Total: 4.13%
+Year: 2022 | AvgRet: -3.35% | AvgHold: 10.3d | Trades: 3 | Total: -9.71%
+Year: 2021 | AvgRet: 1.88% | AvgHold: 27.8d | Trades: 9 | Total: 18.23%
+Year: 2020 | AvgRet: 2.16% | AvgHold: 16.5d | Trades: 11 | Total: 26.54%
+Year: 2019 | AvgRet: 3.02% | AvgHold: 30.7d | Trades: 7 | Total: 23.15%
+Year: 2018 | AvgRet: -0.51% | AvgHold: 21.2d | Trades: 6 | Total: -3.03%
+Year: 2017 | AvgRet: 0.84% | AvgHold: 18.3d | Trades: 10 | Total: 8.74%
+Year: 2016 | AvgRet: -0.03% | AvgHold: 14.8d | Trades: 10 | Total: -0.31%

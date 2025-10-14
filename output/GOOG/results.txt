@@ -1,0 +1,10 @@
+Year: 2025 | AvgRet: -2.56% | AvgHold: 6.0d | Trades: 1 | Total: -2.56%
+Year: 2024 | AvgRet: 2.42% | AvgHold: 15.4d | Trades: 5 | Total: 12.69%
+Year: 2023 | AvgRet: -1.57% | AvgHold: 9.3d | Trades: 12 | Total: -17.29%
+Year: 2022 | AvgRet: 0.00% | AvgHold: 0.0d | Trades: 0 | Total: 0.00%
+Year: 2021 | AvgRet: 1.47% | AvgHold: 21.6d | Trades: 7 | Total: 10.77%
+Year: 2020 | AvgRet: -0.34% | AvgHold: 9.2d | Trades: 12 | Total: -3.99%
+Year: 2019 | AvgRet: 0.60% | AvgHold: 18.4d | Trades: 5 | Total: 3.03%
+Year: 2018 | AvgRet: -0.28% | AvgHold: 12.2d | Trades: 4 | Total: -1.12%
+Year: 2017 | AvgRet: -0.51% | AvgHold: 11.1d | Trades: 8 | Total: -3.98%
+Year: 2016 | AvgRet: -1.01% | AvgHold: 8.3d | Trades: 9 | Total: -8.70%
