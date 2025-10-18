@@ -17,6 +17,8 @@ class Trade:
     pct: float
 
 def backtest_year(all_df, year, params):
+    if not hasattr(backtest_year, "_compounded_return"):
+        backtest_year._compounded_return = 1.0
     year_df = all_df[all_df["Date"].dt.year == year]
     if year_df.empty:
         raise ValueError(f"No data for year {year}")
@@ -183,4 +185,23 @@ def backtest_year(all_df, year, params):
             f"Total: {est_total_return:.2f}%\n"
         )
 
+    years_sorted = sorted(all_df["Date"].dt.year.unique())
+    first_year, last_year = years_sorted[0], years_sorted[-1]
+
+    if not hasattr(backtest_year, "_results_written"):
+        backtest_year._results_written = False
+
+    backtest_year._compounded_return *= (1 + est_total_return / 100)
+
+    if year == years_sorted[0] and not backtest_year._results_written:
+        total_return_pct = (backtest_year._compounded_return - 1) * 100
+        avg_annual_return = (backtest_year._compounded_return ** (1 / len(years_sorted)) - 1) * 100
+
+        with open(overview_path, "a", encoding="utf-8") as f:
+            f.write("\n")
+            f.write(f"Total Compounded Return ({first_year}-{last_year}): {total_return_pct:.2f}%\n")
+            f.write(f"Avg Annual Return: {avg_annual_return:.2f}%\n")
+
+        backtest_year._results_written = True
+        
     return trades_df, equity, metrics
