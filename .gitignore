@@ -1,3 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
 fsdstocks/output/
 fsdstocks/__pycache__/
 output/

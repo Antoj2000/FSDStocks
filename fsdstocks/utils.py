@@ -2,7 +2,7 @@ import os
 import numpy as np
 import pandas as pd
 
-DEFAULT_TEST_YEARS = list(range(2025, 1999, -1))
+DEFAULT_TEST_YEARS = list(range(2025, 2013, -1))
 TRAIN_YEAR = 2024
 OUTPUT_DIR = "output"
 RESULTS_TXT = os.path.join(OUTPUT_DIR, "results.txt")
