@@ -18,11 +18,12 @@ run:
 
 run-all:
 	@echo ">>> Running backtests for all CSVs in $(STOCKS_DIR)..."
-	@for f in $(STOCKS_DIR)/*.csv; do \
-		echo ">>> Processing $$f"; \
-		$(PYTHON) -m $(SRC_DIR).main $$f; \
-	done
-
+ifdef LIMIT
+	$(PYTHON) -m $(SRC_DIR).main $(STOCKS_DIR)/*.csv --limit $(LIMIT)
+else
+	$(PYTHON) -m $(SRC_DIR).main $(STOCKS_DIR)/*.csv
+endif
+# Example : make run-all LIMIT=25
 # Example: make run-all
 
 # Re-run a full clean test cycle
@@ -30,6 +31,12 @@ test-all: clean run-all
 	@echo ">>> Completed full clean test cycle."
 
 # Example: make test-all
+
+# Optional: clean command to remove outputs
+clean:
+	@echo ">>> Cleaning output directory..."
+	@rm -rf $(OUTPUT_DIR)
+	@echo "Done."
 
 # ==============================
 # Default help display
