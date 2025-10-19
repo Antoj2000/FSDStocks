@@ -16,7 +16,7 @@ class Trade:
     days: int
     pct: float
 
-def backtest_year(all_df, year, params):
+def backtest_year(all_df, year, params, tested_years=None):
     # --- Persistent Trackers for overview ---
     if not hasattr(backtest_year, "_compounded_return"):
         backtest_year._compounded_return = 1.0
@@ -220,43 +220,69 @@ def backtest_year(all_df, year, params):
             f"Trades: {metrics.get('num_trades', 0)} | "
             f"Total: {metrics.get('est_total_return', 0):.2f}%\n"
         )
-    
     # --- Update Overall Results Overview ---
-    overview_path = os.path.join(OUTPUT_DIR, ticker_folder, "results_overview.txt")
-    if year == latest_year:
-        if os.path.exists(overview_path):
-            os.remove(overview_path)
-        mode = "w"
-        header = True
-    else:
-        mode = "a"
-        header = False
+    # --- Manage yearly overview aggregation ---
+    if not hasattr(backtest_year, "yearly_cache"):
+        backtest_year.yearly_cache = {}
 
-    with open(overview_path, mode, encoding="utf-8") as f:
-        if header:
-            f.write(f"{ticker_folder} Backtest Results Overview\n{'-' * 60}\n")
+    ticker = year_df["Ticker"].iloc[0]
+    backtest_year.yearly_cache.setdefault(ticker, {})[year] = metrics
+
+    # Use the true tested_years list from main.py (full planned range)
+    planned_years = sorted(tested_years) if tested_years else sorted(backtest_year.yearly_cache[ticker].keys())
+    cache_years = sorted(backtest_year.yearly_cache[ticker].keys())
+
+    first_year = min(planned_years)
+    last_year = max(planned_years)
+
+    # --- Path for overview file ---
+    overview_path = os.path.join(OUTPUT_DIR, ticker, "results_overview.txt")
+
+    # --- Remove stale overview file when starting fresh (first year) ---
+    if year == first_year and os.path.exists(overview_path):
+        os.remove(overview_path)
+
+    # --- Create header if new file ---
+    if not os.path.exists(overview_path):
+        with open(overview_path, "w", encoding="utf-8") as f:
+            f.write(f"{ticker} Backtest Results Overview\n{'-' * 60}\n")
+
+    # --- Append this year's result line ---
+    with open(overview_path, "a", encoding="utf-8") as f:
         f.write(
             f"Year: {year} | "
-            f"AvgRet: {metrics.get('avg_return_pct', 0):.2f}% | "
-            f"AvgHold: {metrics.get('avg_hold_days', 0):.1f}d | "
-            f"Trades: {metrics.get('num_trades', 0)} | "
-            f"Total: {metrics.get('est_total_return', 0):.2f}%\n"
+            f"AvgRet: {metrics['avg_return_pct']:.2f}% | "
+            f"AvgHold: {metrics['avg_hold_days']:.1f}d | "
+            f"Trades: {metrics['num_trades']} | "
+            f"Total: {metrics['est_total_return']:.2f}%\n"
         )
 
+    # --- Write final summary only after last tested year ---
+    if tested_years and year == max(planned_years) and not getattr(backtest_year, "_finalized", {}).get(ticker, False):
+        ticker_equity = 1.0
+        profitable_years = 0
+        total_trades = 0
 
-    # --- Append total componded/average annual once after oldest year --- 
-    years_sorted = sorted(all_df["Date"].dt.year.unique())
-    first_year, last_year = years_sorted[0], years_sorted[-1]
-    backtest_year._compounded_return *= (1 + metrics["est_total_return"] / 100)
+        for y, m in sorted(backtest_year.yearly_cache[ticker].items()):
+            ticker_equity *= (1 + m["est_total_return"] / 100)
+            total_trades += m["num_trades"]
+            if m["est_total_return"] > 0:
+                profitable_years += 1
 
-    if year == years_sorted[0] and not backtest_year._results_written:
-        total_return_pct = (backtest_year._compounded_return - 1) * 100
-        avg_annual_return = (backtest_year._compounded_return ** (1 / len(years_sorted)) - 1) * 100
+        total_return_pct = (ticker_equity - 1) * 100
+        avg_annual_return = (ticker_equity ** (1 / len(tested_years)) - 1) * 100 if tested_years else 0
+        win_rate = (profitable_years / len(tested_years) * 100) if tested_years else 0
 
         with open(overview_path, "a", encoding="utf-8") as f:
             f.write("\n")
             f.write(f"Total Compounded Return ({first_year}-{last_year}): {total_return_pct:.2f}%\n")
-            f.write(f"Avg Annual Return: {avg_annual_return:.2f}%\n")
-        backtest_year._results_written = True
+            f.write(f"Average Annual Return: {avg_annual_return:.2f}%\n")
+            f.write(f"Win Rate (profitable years): {win_rate:.2f}%\n")
+            f.write(f"Total Trades: {total_trades}\n")
+
+        # mark finalized so it won’t write again
+        if not hasattr(backtest_year, "_finalized"):
+            backtest_year._finalized = {}
+        backtest_year._finalized[ticker] = True
         
     return trades_df, equity, metrics

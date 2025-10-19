@@ -38,6 +38,7 @@ def main():
     tickers_tested = len(all_csvs)
     yearly_returns = []
     win_years = 0
+    stock_equities = {}
 
 
     # --- Run backtests year by year (aggregated portfolio approach) ---
@@ -52,9 +53,16 @@ def main():
             ticker = os.path.splitext(os.path.basename(csv_path))[0]
             try:
                 stock_df = load_csvs([csv_path])
-                _, _, metrics = backtest_year(stock_df, yr, params)
+                _, _, metrics = backtest_year(stock_df, yr, params, tested_years=years)
                 yr_ret = metrics.get("est_total_return", 0.0)
                 trades_this_year += metrics.get("num_trades", 0)
+                
+                # --- Update per-stock compounded equity ---
+                if ticker not in stock_equities:
+                    stock_equities[ticker] = 1.0
+                stock_equities[ticker] *= (1 + yr_ret / 100)
+
+
                 year_equity *= (1 + yr_ret / 100)
                 total_stocks += 1
                 if yr_ret > 0:
@@ -85,6 +93,12 @@ def main():
     win_rate = (win_years / years_covered * 100) if years_covered > 0 else 0
     avg_trades_per_stock = total_trades / tickers_tested if tickers_tested > 0 else 0
 
+    # --- Rank top/bottom stocks ---
+    stock_perf = {t: (eq - 1) * 100 for t, eq in stock_equities.items()}
+    sorted_perf = sorted(stock_perf.items(), key=lambda x: x[1], reverse=True)
+    top5 = sorted_perf[:5]
+    bottom5 = sorted_perf[-5:] if len(sorted_perf) > 5 else sorted_perf
+
     # --- Write global summary ---
     with open(summary_path, "w", encoding="utf-8") as f:
         f.write("FSDStocks - Global Backtest Summary\n")
@@ -98,10 +112,26 @@ def main():
         f.write(f"Win Rate (profitable years): {win_rate:.2f}%\n")
         f.write(f"Average Trades per Stock: {avg_trades_per_stock:.1f}\n")
 
+        # --- Append top/bottom performers ---
+        f.write("Top 5 Performing Stocks:\n")
+        for t, r in top5:
+            f.write(f"  {t:<10} {r:>8.2f}%\n")
+
+        f.write("\nBottom 5 Performing Stocks:\n")
+        for t, r in bottom5:
+            f.write(f"  {t:<10} {r:>8.2f}%\n")
+
     print("\n✅ Global summary written to:", summary_path)
     print(f"Total Compounded Return: {total_return_pct:.2f}%")
     print(f"Average Annual Return: {avg_annual_return:.2f}%")
     print(f"Win Rate: {win_rate:.2f}%")
+
+    print("\n🏆 Top 5 performers:")
+    for t, r in top5:
+        print(f"  {t}: {r:.2f}%")
+    print("\n💀 Bottom 5 performers:")
+    for t, r in bottom5:
+        print(f"  {t}: {r:.2f}%")
 
 
 if __name__ == "__main__":
