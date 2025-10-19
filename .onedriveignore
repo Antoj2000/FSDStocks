@@ -1,1 +1,7 @@
-output/
+## Ignore local output/build folders so OneDrive doesn't sync generated data
+# Top-level output directory
+/output/
+# Output directory inside the fsdstocks package
+/fsdstocks/output/
+# Catch-all: any folder named `output` anywhere under the repo
+**/output/

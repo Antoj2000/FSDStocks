@@ -18,13 +18,25 @@ run:
 
 run-all:
 	@echo ">>> Running backtests for all CSVs in $(STOCKS_DIR)..."
-ifdef LIMIT
-	$(PYTHON) -m $(SRC_DIR).main $(STOCKS_DIR)/*.csv --limit $(LIMIT)
-else
-	$(PYTHON) -m $(SRC_DIR).main $(STOCKS_DIR)/*.csv
-endif
-# Example : make run-all LIMIT=25
+	@echo "QUIET=$(QUIET) | LIMIT=$(LIMIT)"
+	@mkdir -p $(OUTPUT_DIR)
+	@if [ "$(QUIET)" = "true" ]; then \
+		if [ -n "$(LIMIT)" ]; then \
+			$(PYTHON) -m $(SRC_DIR).main $(STOCKS_DIR)/*.csv --limit $(LIMIT) --quiet; \
+		else \
+			$(PYTHON) -m $(SRC_DIR).main $(STOCKS_DIR)/*.csv --quiet; \
+		fi; \
+	else \
+		if [ -n "$(LIMIT)" ]; then \
+			$(PYTHON) -m $(SRC_DIR).main $(STOCKS_DIR)/*.csv --limit $(LIMIT); \
+		else \
+			$(PYTHON) -m $(SRC_DIR).main $(STOCKS_DIR)/*.csv; \
+		fi; \
+	fi
+
 # Example: make run-all
+# Example: make run-all LIMIT=25
+# Example: make run-all QUIET=true LIMIT=50
 
 # Re-run a full clean test cycle
 test-all: clean run-all

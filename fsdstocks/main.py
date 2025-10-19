@@ -15,6 +15,7 @@ def main():
     parser.add_argument("csvs", nargs="+", help="Paths to CSV files")
     parser.add_argument("--years", nargs="*", type=int, default=DEFAULT_TEST_YEARS, help="Years to backtest")
     parser.add_argument("--limit", type=int, default=None, help="Limit number of stocks to test (e.g., 25 or 50)")
+    parser.add_argument("--quiet", action="store_true", help="Run without printing per-stock output")
     args = parser.parse_args()
 
     # --- Limit ticker list if requested ---
@@ -68,12 +69,14 @@ def main():
                 if yr_ret > 0:
                     profitable_stocks += 1
 
-                print(
-                    f"  {ticker}: AvgRet={metrics['avg_return_pct']:.2f}% | "
-                    f"Trades={metrics['num_trades']} | YearTotal={yr_ret:.2f}%"
-                )
+                if not args.quiet:
+                    print(
+                        f"  {ticker}: AvgRet={metrics['avg_return_pct']:.2f}% | "
+                        f"Trades={metrics['num_trades']} | YearTotal={yr_ret:.2f}%"
+                    )
             except Exception as e:
-                print(f"  {ticker}: backtest failed ({e})")
+                if not args.quiet:
+                    print(f"  {ticker}: backtest failed ({e})")
 
         # Compute average across tickers for that year (no compounding)
         if total_stocks > 0:
@@ -82,11 +85,12 @@ def main():
             total_trades += trades_this_year
             if profitable_stocks / total_stocks > 0.5:
                 win_years += 1
-
-        print(f"→ Year {yr} portfolio return: {avg_yearly_return:.2f}%\n")
+        if not args.quiet:
+            print(f"→ Year {yr} portfolio return: {avg_yearly_return:.2f}%\n")
 
     # --- Debug yearly returns used for global compounding ---
-    print(f"\n[DEBUG] Yearly portfolio returns used for compounding: {yearly_returns}")
+    clean_returns = [float(r) for r in yearly_returns]
+    print(f"\n[DEBUG] Yearly portfolio returns used for compounding: {clean_returns}")
 
     # --- Compute overall portfolio compounding properly ---
     if yearly_returns:
