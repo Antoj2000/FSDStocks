@@ -1,0 +1,89 @@
+strategies:
+
+  # ============================================================
+  # === 1. Current default logic (your baseline strategy) ===
+  # ============================================================
+  ma_rsi_volatility:
+    description: "Moving-average crossover + RSI + volatility and trend filter (baseline)"
+    indicators:
+      - type: "ma"
+        params: { fast: 5, slow: 50 }
+      - type: "rsi"
+        params: { window: 14, buy: 55, sell: 45 }
+      - type: "ma"          # for long-term trend filter
+        params: { slow: 200 }
+      - type: "volatility"  # will be computed internally if you later add support
+        params: { window: 14, threshold_mult: 0.5 }
+    rules:
+      buy: "(MA5 > MA50) and (Adj_Close > MA200 * 0.95) and (RSI > rsi_buy - 15)"
+      sell: "(MA5 < MA50) or (RSI < rsi_sell) or (Adj_Close <= MA200 * 0.95)"
+
+
+  # ============================================================
+  # === 2. Bollinger Band breakout with RSI filter ============
+  # ============================================================
+  bollinger_rsi:
+    description: "Buy near lower Bollinger Band when RSI is oversold, exit near upper band"
+    indicators:
+      - type: "bollinger"
+        params: { window: 20, num_std: 1.8 }
+      - type: "rsi"
+        params: { window: 14, buy: 40, sell: 65 }
+      - type: "ma"
+        params: { slow: 100 }
+    rules:
+      buy: "(Adj_Close < Lower_Band * 1.02) and (RSI < rsi_buy) and (Adj_Close > MA100 * 0.95)"
+      sell: "(Adj_Close > Upper_Band * 0.98) or (RSI > rsi_sell) or (Adj_Close < MA100 * 0.95)"
+
+
+  # ============================================================
+  # === 3. Mean-reversion RSI only strategy ===================
+  # ============================================================
+  mean_reversion_rsi:
+    description: "Pure RSI mean-reversion: buy when oversold, sell when overbought"
+    indicators:
+      - type: "rsi"
+        params: { window: 14, buy: 35, sell: 65 }
+    rules:
+      buy: "RSI < rsi_buy"
+      sell: "RSI > rsi_sell"
+
+  trend_breakout_ma:
+    description: "Uptrend filter + 20D breakout + RSI confirmation; wide stop, no TP (let winners run)"
+    indicators:
+      - type: "ma"
+        params: { fast: 20, slow: 50 }
+      - type: "ma"
+        params: { slow: 200 }
+      - type: "rsi"
+        params: { window: 14, buy: 55, sell: 45 }
+      - type: "highlow"
+        params: { window: 20 }    # produces High_20 / Low_20
+    rules:
+      buy:  "(MA50 > MA200) and (Adj_Close > High_20) and (RSI > rsi_buy)"
+      sell: "(Adj_Close < MA50) or (RSI < rsi_sell)"
+    risk:
+      stop_loss_pct: 10           # 10% protective stop
+      take_profit_pct: null       # no fixed TP; trail via sell rule
+
+  momentum_rsi_breakout:
+    name: "momentum_rsi_breakout"
+    description: "Aggressive momentum + RSI breakout strategy with MA cross confirmation"
+    indicators:
+      - type: "ma"
+      - type: "rsi"
+        params:
+          window: 14
+      - type: "highlow"
+        params:
+          window: 10
+      - type: "volatility"
+        params: 
+          window: 14
+          threshold_mult: 0.6
+    rules:
+      buy: "((MA_fast > MA_slow * 0.98) | ((RSI > rsi_buy) & VolOK))"
+      sell: "((MA_fast < MA_slow) | (RSI < rsi_sell))"
+    risk:
+      stop_loss_pct: 6
+      take_profit_pct: 15
